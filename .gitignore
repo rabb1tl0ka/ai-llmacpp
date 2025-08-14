@@ -1,0 +1,7 @@
+# Ignore all files under models/
+models/**
+
+# But keep the folder structure (empty subfolders)
+!models/
+!models/**/
+!models/**/.gitkeep
