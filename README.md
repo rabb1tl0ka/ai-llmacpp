@@ -1,7 +1,6 @@
 # 🧠 ai-llmacpp
 
-> A lightweight launcher for running `llama.cpp` models locally with enhanced usability and flexible shell scripts 
-> for macOS, Linux, and Windows.
+> A lightweight, local-first launcher for running `llama.cpp` models using flexible shell scripts across macOS, Linux, and Windows.
 
 ![Shell](https://img.shields.io/badge/shell-Bash-blue)
 ![Platform](https://img.shields.io/badge/platform-macOS%20|%20Linux%20|%20Windows-green)
@@ -13,10 +12,10 @@
 
 - ✅ Quick CLI launcher for `llama.cpp` models
 - 🔍 Model prefix matching + interactive selection
-- 🖥️  macOS/Linux support with Metal or multi-core CPU
-- 🪟 Windows support with optional DirectML acceleration
-- 📁 Ignores large model files while keeping folder structure
-- 🧼 Clean and portable — no Python or extra deps required
+- 🖥️ Runs on macOS (Metal), Linux (OpenBLAS), and Windows (CPU/DirectML)
+- 📦 Smart model downloader with skip-if-exists support
+- 📁 Clean structure: models are gitignored, folders preserved
+- 🧼 No Python required — just shell scripts and compiled C++
 
 ---
 
@@ -24,38 +23,47 @@
 
 ```
 .
-├── models/
-│   ├── kingabzpro/ (example)
-│   ├── mistral/    (example)
-│   ├── phi3/       (example)
-├── run-llama-universal.sh     # macOS + Linux runner
-├── run-llama-macos.sh         # macOS specific runner
-├── run-llama-linux.sh         # Linux specific runner
-├── run-llama-windows.bat      # Windows runner (PowerShell inside)
-├── setup_llama_mac.sh         # macOS setup script (Metal support)
-├── setup_llama_windows_advanced.bat  # Windows setup (DirectML or CPU)
+├── models/                        # Place your GGUF models here
+├── download_models.sh             # Linux/macOS model downloader
+├── download_models_windows.bat    # Windows model downloader
+├── run_llama_linux_mac.sh         # Combined launcher for Linux/macOS
+├── run_llama_linux.sh             # Linux-only launcher
+├── run_llama_macos.sh             # macOS-only launcher
+├── run_llama_windows.bat          # Windows launcher
+├── setup_llama_linux.sh           # Linux setup script
+├── setup_llama_mac.sh             # macOS setup script
+├── setup_llama_windows.bat        # Windows basic setup
+├── setup_llama_windows_advanced.bat # Windows DirectML/advanced setup
+└── README.md
 ```
 
 ---
 
 ## 🛠️ Setup
 
-### macOS
+### Step 1: Compile `llama.cpp`
+
+#### macOS
 
 ```bash
 bash setup_llama_mac.sh
 ```
 
-### Linux
+#### Linux
 
 ```bash
-# Manually build llama.cpp or use the universal script
-make -j LLAMA_OPENBLAS=1
+bash setup_llama_linux.sh
 ```
 
-### Windows
+#### Windows
 
-Run from Git Bash or CMD:
+Run either:
+
+```bat
+setup_llama_windows.bat
+```
+
+or (with DirectML support):
 
 ```bat
 setup_llama_windows_advanced.bat
@@ -63,24 +71,56 @@ setup_llama_windows_advanced.bat
 
 ---
 
-## 🧠 Run it
+### Step 2: Download models
 
-Run from your terminal:
+#### Linux / macOS
 
 ```bash
-./run-llama-linux-mac.sh mistral "Explain RAG in simple terms"
+bash download_models.sh
 ```
 
-If multiple models match, you'll be prompted to pick one.
+#### Windows
+
+```bat
+download_models_windows.bat
+```
+
+These scripts:
+- Download recommended models for common setups
+- Skip downloads if the `.gguf` files already exist
+- Place files in the proper `models/` subfolders
+
+---
+
+## 🧠 Run it
+
+### For Linux or macOS
+
+```bash
+./run_llama_linux_mac.sh mistral "What is Retrieval-Augmented Generation?"
+```
+
+### For Windows
+
+```bat
+run_llama_windows.bat mistral "What is Llama.cpp?"
+```
+
+
+You can pass:
+- A model prefix (e.g. `mistral`, `phi`, `llama`)
+- A prompt to evaluate
+
+If multiple models match, it will prompt you to pick one.
 
 ---
 
 ## 📦 Dependencies
 
-- `llama.cpp` compiled locally
-- macOS: Metal support enabled (`LLAMA_METAL=1`)
+- `llama.cpp` (built locally)
+- macOS: Metal (`LLAMA_METAL=1`)
 - Linux: OpenBLAS (`LLAMA_OPENBLAS=1`)
-- Windows: Visual Studio + optional DirectML
+- Windows: Visual Studio, MSVC tools, (optional) DirectML
 
 ---
 
