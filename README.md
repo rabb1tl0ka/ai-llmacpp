@@ -23,17 +23,20 @@
 
 ```
 .
-├── models/                        # Place your GGUF models here
-├── download_models.sh             # Linux/macOS model downloader
-├── download_models_windows.bat    # Windows model downloader
-├── run_llama_linux_mac.sh         # Combined launcher for Linux/macOS
-├── run_llama_linux.sh             # Linux-only launcher
-├── run_llama_macos.sh             # macOS-only launcher
-├── run_llama_windows.bat          # Windows launcher
-├── setup_llama_linux.sh           # Linux setup script
-├── setup_llama_mac.sh             # macOS setup script
-├── setup_llama_windows.bat        # Windows basic setup
-├── setup_llama_windows_advanced.bat # Windows DirectML/advanced setup
+├── models/                             # Place your GGUF models here
+├── download_models.sh                  # (Deprecated) hardcoded Linux/macOS downloader
+├── download_models_windows.bat         # (Deprecated) hardcoded Windows downloader
+├── download_models_file.sh             # New file-based Linux/macOS model downloader
+├── download_models_file_windows.bat    # New file-based Windows model downloader
+├── model_urls.txt                      # All the model urls 
+├── run_llama_linux_mac.sh              # Combined launcher for Linux/macOS
+├── run_llama_linux.sh                  # Linux-only launcher
+├── run_llama_macos.sh                  # macOS-only launcher
+├── run_llama_windows.bat               # Windows launcher
+├── setup_llama_linux.sh                # Linux setup script
+├── setup_llama_mac.sh                  # macOS setup script
+├── setup_llama_windows.bat             # Windows basic setup
+├── setup_llama_windows_advanced.bat    # Windows DirectML/advanced setup
 └── README.md
 ```
 
@@ -71,19 +74,29 @@ setup_llama_windows_advanced.bat
 
 ---
 
-### Step 2: Download models
+### Step 2: Download models (Recommended)
+
+Use the new file-based scripts:
 
 #### Linux / macOS
 
 ```bash
-bash download_models.sh
+bash download_models_file.sh
 ```
 
 #### Windows
 
 ```bat
-download_models_windows.bat
+download_models_file_windows.bat
 ```
+
+These scripts:
+- Read from `model_urls.txt` (one model path and URL per line)
+- Download recommended models for common setups
+- Skip downloads if the `.gguf` files already exist
+- Place files in the proper `models/` subfolders
+
+You can still use the older hardcoded scripts (`download_models.sh`, `download_models_windows.bat`) if needed.
 
 These scripts:
 - Download recommended models for common setups
