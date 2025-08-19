@@ -2,8 +2,8 @@
 setlocal enabledelayedexpansion
 echo ≡ Downloading GGUF models...
 
-REM Read each line from model_urls.txt as "path|url"
-for /f "usebackq tokens=1,2 delims=|" %%a in ("model_urls.txt") do (
+REM Read each line from model_urls.txt as "path,url"
+for /f "usebackq tokens=1,2 delims=," %%a in ("model_urls.txt") do (
   set "MODEL_PATH=%%a"
   set "MODEL_URL=%%b"
 
