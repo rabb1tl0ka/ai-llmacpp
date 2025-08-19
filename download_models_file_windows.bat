@@ -1,29 +1,27 @@
 @echo off
-REM download_models_windows.bat — Download GGUF models based on model_urls.txt
-
 setlocal enabledelayedexpansion
+echo ≡ Downloading GGUF models...
 
-set "MODEL_LIST_FILE=model_urls.txt"
+REM Read each line from model_urls.txt as "path|url"
+for /f "usebackq tokens=1,2 delims=|" %%a in ("model_urls.txt") do (
+  set "MODEL_PATH=%%a"
+  set "MODEL_URL=%%b"
 
-if not exist "%MODEL_LIST_FILE%" (
-    echo ❌ Error: model list file not found: %MODEL_LIST_FILE%
-    exit /b 1
+  call :trim MODEL_PATH
+  call :trim MODEL_URL
+
+  if not exist "!MODEL_PATH!" (
+    echo ↓ Downloading !MODEL_PATH!
+    powershell -Command "Invoke-WebRequest '!MODEL_URL!' -OutFile '!MODEL_PATH!'"
+  ) else (
+    echo ✓ Already exists: !MODEL_PATH!
+  )
 )
+goto :eof
 
-echo 📥 Downloading GGUF models...
-
-for /f "usebackq tokens=1,2 delims=," %%A in ("%MODEL_LIST_FILE%") do (
-    set "MODEL_PATH=%%A"
-    set "MODEL_URL=%%B"
-
-    if exist "!MODEL_PATH!" (
-        echo ✅ Already exists: !MODEL_PATH!
-    ) else (
-        echo 🔽 Downloading: !MODEL_PATH!
-        powershell -Command "New-Item -ItemType Directory -Force -Path "$(Split-Path -Path '!MODEL_PATH!')""
-        powershell -Command "Invoke-WebRequest -Uri '!MODEL_URL!' -OutFile '!MODEL_PATH!'"
-    )
-)
-
-echo ✅ All downloads completed (or skipped).
-pause
+REM Trim leading/trailing spaces
+:trim
+setlocal enabledelayedexpansion
+set "str=!%1!"
+for /f "tokens=* delims= " %%x in ("!str!") do endlocal & set "%1=%%x"
+goto :eof
