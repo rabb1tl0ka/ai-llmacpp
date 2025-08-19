@@ -10,6 +10,15 @@ for /f "usebackq tokens=1,2 delims=," %%a in ("model_urls.txt") do (
   call :trim MODEL_PATH
   call :trim MODEL_URL
 
+  REM Extract the folder path and make sure it exists
+  for %%F in ("!MODEL_PATH!") do (
+    set "MODEL_FOLDER=%%~dpF"
+    if not exist "!MODEL_FOLDER!" (
+      echo Creating folder: !MODEL_FOLDER!
+      mkdir "!MODEL_FOLDER!" >nul 2>&1
+    )
+  )
+
   if not exist "!MODEL_PATH!" (
     echo ↓ Downloading !MODEL_PATH!
     powershell -Command "Invoke-WebRequest '!MODEL_URL!' -OutFile '!MODEL_PATH!'"
