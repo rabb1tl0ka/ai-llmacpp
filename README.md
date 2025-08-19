@@ -44,68 +44,70 @@
 
 ## 🛠️ Setup
 
-### Step 1: Compile `llama.cpp`
+### Step 1: Clone this repo
 
-#### macOS
+1. Pick a directory to store this repo
 
-```bash
-bash setup_llama_mac.sh
-```
+If you're new, just create a new directory in a place that you can easily access.
 
-#### Linux
+In my case I store all my repos in my root folder:
 
 ```bash
-bash setup_llama_linux.sh
+cd ~		    # root directory
+mkdir code      # this is where you will store all your GitHub repos
 ```
 
-#### Windows
+2. Now just clone this repo to your root GitHub repo storage
 
-Run either:
+```bash
+# This is where all my GitHub repos live
+cd ~/code   
 
-```bat
-setup_llama_windows.bat
+# Get this repo (it will create the repo directory for you)
+git clone https://github.com/rabb1tl0ka/ai-llmacpp.git
 ```
 
-or (with DirectML support):
+### Step 2: Setup `llama.cpp`
 
-```bat
-setup_llama_windows_advanced.bat
+Make sure that you're not running the `setup_llama` scripts inside this repo.
+
+This is the reason why the first line below is to go to the root directory where you store all your GitHub projects.
+
+
+```bash
+# Go to where all your GitHub repos are
+cd ~/code
+
+# Then just run the setup llama script for your OS of choice.
+# Here I'm using Linux
+bash ./ai-llmacpp/setup_llama_linux.sh
 ```
 
 ---
 
-### Step 2: Download models (Recommended)
+### Step 3: Download models (Recommended)
 
-Use the new file-based scripts:
-
-#### Linux / macOS
+If you want to get started with some recommended models that just work out-of-the-box, then do this:
 
 ```bash
+# Go to where you cloned this repo
+cd ~/code/ai-llmacpp
+
+# Execute the download models script for Linux and macOS
 bash download_models_file.sh
-```
 
-#### Windows
-
-```bat
+# Or Windows
 download_models_file_windows.bat
 ```
 
 These scripts:
-- Read from `model_urls.txt` (one model path and URL per line)
-- Download recommended models for common setups
+- Read from `model_urls.txt` (you can add more models if you want to but this already comes with some popular choices!)
 - Skip downloads if the `.gguf` files already exist
-- Place files in the proper `models/` subfolders
-
-You can still use the older hardcoded scripts (`download_models.sh`, `download_models_windows.bat`) if needed.
-
-These scripts:
-- Download recommended models for common setups
-- Skip downloads if the `.gguf` files already exist
-- Place files in the proper `models/` subfolders
+- Place files in the proper `models/` subfolders (so you don't have to worry about it.)
 
 ---
 
-## 🧠 Run it
+## 🧠 Run it (easy!)
 
 ### For Linux or macOS
 
@@ -118,7 +120,6 @@ These scripts:
 ```bat
 run_llama_windows.bat mistral "What is Llama.cpp?"
 ```
-
 
 You can pass:
 - A model prefix (e.g. `mistral`, `phi`, `llama`)
