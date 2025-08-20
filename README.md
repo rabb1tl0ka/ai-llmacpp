@@ -42,9 +42,9 @@
 
 ---
 
-## 🛠️ Setup
+# 🛠️ Setup
 
-### Step 1: Clone this repo
+## Step 1: Clone this repo
 
 1. Pick a directory to store this repo
 
@@ -67,12 +67,13 @@ cd ~/code
 git clone https://github.com/rabb1tl0ka/ai-llmacpp.git
 ```
 
-### Step 2: Setup `llama.cpp`
+## Step 2: Setup `llama.cpp`
 
 Make sure that you're not running the `setup_llama` scripts inside this repo.
 
 This is the reason why the first line below is to go to the root directory where you store all your GitHub projects.
 
+## Linux
 
 ```bash
 # Go to where all your GitHub repos are
@@ -83,11 +84,52 @@ cd ~/code
 bash ./ai-llmacpp/setup_llama_linux.sh
 ```
 
+## Windows
+
+You need to have CMake installed.
+- Download from: https://cmake.org/download/
+- Choose the Windows .msi installer (x64)
+- During installation, make sure to select: “Add CMake to system PATH for all users”
+- After installation, close and reopen your terminal / PowerShell window so it picks up the new PATH.
+
+Next, you need to install Visual Studio Build Tools 
+(because CMake will use stuff that it's available in that package)
+
+Steps: 
+1. Download from: https://visualstudio.microsoft.com/downloads/
+→ Under “Tools for Visual Studio” choose “Build Tools for Visual Studio”
+
+2. During installation, select: Desktop development with C++
+(This includes both the C++ compiler and nmake)
+
+3. After installation, open: 
+Start Menu → “x64 Native Tools Command Prompt for VS 2022”
+
+```bash
+# Go to where all your GitHub repos are
+cd ~/code
+
+# Here I'm using Linux
+./ai-llmacpp/setup_llama_windows.bat
+```
+
+#### Why all the extra work for Windows:
+
+You can use a normal PowerShell after everything is installed and on your PATH, but out of the box, PowerShell doesn’t have:
+- a C++ compiler (cl.exe)
+- a build tool (`nmake`)
+- nor the environment setup that those tools need
+
+That’s why, after installing Visual Studio Build Tools, Microsoft gives you a special shell:
+“x64 Native Tools Command Prompt for VS 2022”
+
+This shortcut launches a Command Prompt with all the right environment variables set (PATH, INCLUDE, LIB, etc.) so that `cl`, `nmake`, and `CMake` can actually work.
+
 ---
 
 ### Step 3: Download models (Recommended)
 
-NOTE: You have to have a [Hugging Face](https://huggingface.co/) account to download the recommended models.
+NOTE: Make sure you have a [Hugging Face](https://huggingface.co/) account to download the recommended models.
 
 If you want to get started with some recommended models that just work out-of-the-box, then do this:
 
@@ -143,3 +185,6 @@ If multiple models match, it will prompt you to pick one.
 ## 📄 License
 
 MIT — free to use, modify, and share.
+
+
+
