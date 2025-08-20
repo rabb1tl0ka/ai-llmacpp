@@ -1,7 +1,7 @@
 @echo off
 REM LLM launcher for llama.cpp models on Windows (PowerShell required)
 
-SET "MODEL_DIR=%USERPROFILE%\code\ai-lms"
+SET "MODEL_DIR=%USERPROFILE%\code\ai-llmacpp\models\"
 SET "LLAMA_BIN=%USERPROFILE%\code\llama.cpp\build\bin\Release\main.exe"
 SET "CTX=4096"
 
