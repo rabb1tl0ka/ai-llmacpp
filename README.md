@@ -87,6 +87,8 @@ bash ./ai-llmacpp/setup_llama_linux.sh
 
 ### Step 3: Download models (Recommended)
 
+NOTE: You have to have a [Hugging Face](https://huggingface.co/) account to download the recommended models.
+
 If you want to get started with some recommended models that just work out-of-the-box, then do this:
 
 ```bash
